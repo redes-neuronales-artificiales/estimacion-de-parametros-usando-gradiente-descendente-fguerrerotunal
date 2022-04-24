@@ -47,16 +47,18 @@ def pregunta_02():
     for _ in range(n_iterations):
 
         # Compute el pronóstico con los parámetros actuales
-        x = np.linspace(-4, 0.4211 ,4)
-        y_pred = np.polyval(x_poly, x)#np.___(___, ___)
+        y_pred = np.polyval(params, x_poly[:,1])#np.___(___, ___) = array
 
         # Calcule el error
         error =  y - y_pred  #___ - ___
 
         # Calcule el gradiente
-        gradient = -2*sum(error) #____
+        w2 = -2*sum(error)
+        w1 = -2*np.sum([error*x_poly[:,1]])
+        w0 = w2
+        gradient = np.array([w2, w1, w0])
 
         # Actualice los parámetros
-        params = params - learning_rate * gradient
+        params = params - (learning_rate * gradient)
 
     return params

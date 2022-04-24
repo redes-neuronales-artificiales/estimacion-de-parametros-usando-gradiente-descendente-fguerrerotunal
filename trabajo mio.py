@@ -62,3 +62,12 @@ def pregunta_02():
         params = params - (learning_rate * gradient)
 
     return params
+
+from matplotlib import pyplot as plt
+import pandas as pd
+import numpy as np
+data = pd.read_csv("data.csv")
+plt.plot(data.x,data.y,"ro")
+xx = np.linspace(-4,4,100)
+plt.plot(xx,np.polyval(pregunta_02(),xx))
+print(pregunta_02())

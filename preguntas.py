@@ -45,19 +45,18 @@ def pregunta_02():
     # Defina el parámetro inicial `params` como un arreglo de tamaño 3 con ceros
     params = np.zeros(x_poly.shape[1])#(___.shape[1])
     for _ in range(n_iterations):
-
+    
         # Compute el pronóstico con los parámetros actuales
-        y_pred = np.polyval(params, x_poly[:,1])#np.___(___, ___) = array
-
+        y_pred = np.dot(x_poly, params)#np.___(___, ___) = array
         # Calcule el error
         error =  y - y_pred  #___ - ___
-
+    
         # Calcule el gradiente
-        w2 = -2*sum(error)
-        w1 = -2*np.sum([error*x_poly[:,1]])
-        w0 = w2
-        gradient = np.array([w2, w1, w0])
-
+        w2 = -1*np.sum([error*x_poly[:,2]])
+        w1 = -1*np.sum([error*x_poly[:,1]])
+        w0 = -1*np.sum([error*x_poly[:,0]])
+        gradient = np.array([w0, w1, w2])
+    
         # Actualice los parámetros
         params = params - (learning_rate * gradient)
 

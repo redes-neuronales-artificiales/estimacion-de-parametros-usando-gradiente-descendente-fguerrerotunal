@@ -31,43 +31,37 @@ def pregunta_01():
     return x_poly, data.y
 
 
-def pregunta_02():
+# Importe numpy
+import numpy as np
 
-    # Importe numpy
-    import numpy as np
+x_poly, y = pregunta_01()
 
-    x_poly, y = pregunta_01()
+# Fije la tasa de aprendizaje en 0.0001 y el número de iteraciones en 1000
+learning_rate = 0.0001
+n_iterations = 1000
 
-    # Fije la tasa de aprendizaje en 0.0001 y el número de iteraciones en 1000
-    learning_rate = 0.0001
-    n_iterations = 1000
+# Defina el parámetro inicial `params` como un arreglo de tamaño 3 con ceros
+params = np.zeros(x_poly.shape[1])#(___.shape[1])
+for _ in range(n_iterations):
 
-    # Defina el parámetro inicial `params` como un arreglo de tamaño 3 con ceros
-    params = np.zeros(x_poly.shape[1])#(___.shape[1])
-    for _ in range(n_iterations):
+    # Compute el pronóstico con los parámetros actuales
+    y_pred = np.dot(x_poly, params)#np.___(___, ___) = array
+    # Calcule el error
+    error =  y - y_pred  #___ - ___
 
-        # Compute el pronóstico con los parámetros actuales
-        y_pred = np.polyval(params, x_poly[:,1])#np.___(___, ___) = array
+    # Calcule el gradiente
+    w2 = -1*np.sum([error*x_poly[:,2]])
+    w1 = -1*np.sum([error*x_poly[:,1]])
+    w0 = -1*np.sum([error*x_poly[:,0]])
+    gradient = np.array([w0, w1, w2])
 
-        # Calcule el error
-        error =  y - y_pred  #___ - ___
-
-        # Calcule el gradiente
-        w2 = -2*sum(error)
-        w1 = -2*np.sum([error*x_poly[:,1]])
-        w0 = w2
-        gradient = np.array([w2, w1, w0])
-
-        # Actualice los parámetros
-        params = params - (learning_rate * gradient)
-
-    return params
+    # Actualice los parámetros
+    params = params - (learning_rate * gradient)
 
 from matplotlib import pyplot as plt
 import pandas as pd
-import numpy as np
 data = pd.read_csv("data.csv")
 plt.plot(data.x,data.y,"ro")
 xx = np.linspace(-4,4,100)
-plt.plot(xx,np.polyval(pregunta_02(),xx))
-print(pregunta_02())
+plt.plot(xx,np.polyval(params,xx))
+print(params)
